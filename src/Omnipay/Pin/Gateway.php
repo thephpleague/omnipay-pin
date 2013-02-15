@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Billing\Pin;
+namespace Omnipay\Pin;
 
 use Guzzle\Common\Event;
-use Omnipay\AbstractGateway;
-use Omnipay\Request;
+use Omnipay\Common\AbstractGateway;
+use Omnipay\Common\Request;
 
 /**
  * Pin Gateway

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Billing\Pin;
+namespace Omnipay\Pin;
 
 use Omnipay\TestCase;
 
