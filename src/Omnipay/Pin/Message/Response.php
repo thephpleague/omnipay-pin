@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Pin;
+namespace Omnipay\Pin\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 
