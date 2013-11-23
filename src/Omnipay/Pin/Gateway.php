@@ -35,6 +35,11 @@ class Gateway extends AbstractGateway
         return $this->setParameter('secretKey', $value);
     }
 
+    public function setTestMode($value)
+    {
+        return $this->setParameter('testMode', $value);
+    }
+    
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Pin\Message\PurchaseRequest', $parameters);
