@@ -26,7 +26,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('card_abc', $data['card_token']);
     }
 
-    public function testDataWithCcustomerToken()
+    public function testDataWithCustomerToken()
     {
         $this->request->setToken('cus_abc');
         $data = $this->request->getData();
