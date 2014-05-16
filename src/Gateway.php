@@ -3,7 +3,6 @@
 namespace Omnipay\Pin;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Pin\Message\PurchaseRequest;
 
 /**
  * Pin Gateway
@@ -38,5 +37,15 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Pin\Message\PurchaseRequest', $parameters);
+    }
+
+    public function createCustomer(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Pin\Message\CreateCustomerRequest', $parameters);
+    }
+
+    public function createCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Pin\Message\CreateCardRequest', $parameters);
     }
 }
