@@ -4,15 +4,14 @@ namespace Omnipay\Pin\Message;
 
 use Omnipay\Tests\TestCase;
 
-class PurchaseRequestTest extends TestCase
+class CustomerRequestTest extends TestCase
 {
     public function setUp()
     {
-        $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new CustomerRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
-                'amount' => '10.00',
-                'currency' => 'AUD',
+                'email' => 'roland@pin.net.au',
                 'card' => $this->getValidCard(),
             )
         );
@@ -26,14 +25,6 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('card_abc', $data['card_token']);
     }
 
-    public function testDataWithCcustomerToken()
-    {
-        $this->request->setToken('cus_abc');
-        $data = $this->request->getData();
-
-        $this->assertSame('cus_abc', $data['customer_token']);
-    }
-
     public function testDataWithCard()
     {
         $card = $this->getValidCard();
@@ -45,24 +36,24 @@ class PurchaseRequestTest extends TestCase
 
     public function testSendSuccess()
     {
-        $this->setMockHttpResponse('PurchaseSuccess.txt');
+        $this->setMockHttpResponse('CustomerSuccess.txt');
 
         $response = $this->request->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('ch_fXIxWf0gj1yFHJcV1W-d-w', $response->getTransactionReference());
-        $this->assertSame('Success!', $response->getMessage());
+        $this->assertEquals('cus_Mb-8S1ZgEbLUUUJ97dfhfQ', $response->getCustomerToken());
+        $this->assertTrue($response->getMessage());
     }
 
     public function testSendError()
     {
-        $this->setMockHttpResponse('PurchaseFailure.txt');
+        $this->setMockHttpResponse('CustomerFailure.txt');
         $response = $this->request->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertSame('The current resource was deemed invalid.', $response->getMessage());
+        $this->assertNull($response->getCustomerToken());
+        $this->assertSame('One or more parameters were missing or invalid', $response->getMessage());
     }
 }

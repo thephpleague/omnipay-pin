@@ -18,12 +18,20 @@ class PurchaseRequestTest extends TestCase
         );
     }
 
-    public function testDataWithToken()
+    public function testDataWithCardToken()
     {
-        $this->request->setToken('abc');
+        $this->request->setToken('card_abc');
         $data = $this->request->getData();
 
-        $this->assertSame('abc', $data['card_token']);
+        $this->assertSame('card_abc', $data['card_token']);
+    }
+
+    public function testDataWithCcustomerToken()
+    {
+        $this->request->setToken('cus_abc');
+        $data = $this->request->getData();
+
+        $this->assertSame('cus_abc', $data['customer_token']);
     }
 
     public function testDataWithCard()

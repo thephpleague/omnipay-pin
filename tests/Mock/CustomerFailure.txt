@@ -14,4 +14,4 @@ X-UA-Compatible: IE=Edge,chrome=1
 Content-Length: 152
 Connection: keep-alive
 
-{"error":"invalid_resource","error_description":"The current resource was deemed invalid.","messages":[{"code":"invalid","message":"Processing error"}]}
+{"error":"invalid_resource","error_description":"One or more parameters were missing or invalid","messages":[{"param":"email","code":"email_invalid","message":"Email can't be blank"},{"param":"email","code":"email_invalid","message":"Email is not formatted properly"}]}
