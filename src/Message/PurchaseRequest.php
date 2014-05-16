@@ -70,8 +70,8 @@ class PurchaseRequest extends AbstractRequest
             }
         );
 
-        $httpResponse = $this->httpClient->post($this->getEndpoint().'/charges', null, $data)
-            ->setHeader('Authorization', 'Basic '.base64_encode($this->getSecretKey().':'))
+        $httpResponse = $this->httpClient->post($this->getEndpoint() . '/charges', null, $data)
+            ->setHeader('Authorization', 'Basic ' . base64_encode($this->getSecretKey() . ':'))
             ->send();
 
         return $this->response = new Response($this, $httpResponse->json());

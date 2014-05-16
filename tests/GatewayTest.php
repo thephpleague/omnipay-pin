@@ -14,7 +14,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->options = array(
             'amount' => '10.00',
-            'card' => $this->getValidCard(),
+            'card'   => $this->getValidCard(),
         );
     }
 
