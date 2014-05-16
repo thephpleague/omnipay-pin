@@ -7,7 +7,7 @@ use Omnipay\Common\Message\AbstractRequest;
 /**
  * Pin Purchase Request
  */
-class PurchaseRequest extends AbstractRequest
+class CustomerRequest extends AbstractRequest
 {
     protected $liveEndpoint = 'https://api.pin.net.au/1';
     protected $testEndpoint = 'https://test-api.pin.net.au/1';
@@ -24,21 +24,11 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate('amount', 'card');
-
         $data = array();
-        $data['amount'] = $this->getAmountInteger();
-        $data['currency'] = strtolower($this->getCurrency());
-        $data['description'] = $this->getDescription();
-        $data['ip_address'] = $this->getClientIp();
         $data['email'] = $this->getCard()->getEmail();
 
-        if ($token = $this->getToken()) {
-            if (strpos($token, 'card_') !== false) {
-                $data['card_token'] = $token;
-            } else {
-                $data['customer_token'] = $token;
-            }
+        if ($this->getToken()) {
+            $data['card_token'] = $this->getToken();
         } else {
             $this->getCard()->validate();
 
@@ -70,8 +60,8 @@ class PurchaseRequest extends AbstractRequest
             }
         );
 
-        $httpResponse = $this->httpClient->post($this->getEndpoint().'/charges', null, $data)
-            ->setHeader('Authorization', 'Basic '.base64_encode($this->getSecretKey().':'))
+        $httpResponse = $this->httpClient->post($this->getEndpoint() . '/customers', null, $data)
+            ->setHeader('Authorization', 'Basic ' . base64_encode($this->getSecretKey() . ':'))
             ->send();
 
         return $this->response = new Response($this, $httpResponse->json());
