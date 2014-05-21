@@ -2,8 +2,6 @@
 
 namespace Omnipay\Pin\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
-
 /**
  * Pin Purchase Request
  */
@@ -60,25 +58,8 @@ class PurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        // don't throw exceptions for 4xx errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->isClientError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
-        $httpResponse = $this->httpClient->post($this->getEndpoint() . '/charges', null, $data)
-            ->setHeader('Authorization', 'Basic ' . base64_encode($this->getSecretKey() . ':'))
-            ->send();
+        $httpResponse = $this->sendRequest('/charges', $data);
 
         return $this->response = new Response($this, $httpResponse->json());
-    }
-
-    public function getEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

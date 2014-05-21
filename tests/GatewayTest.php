@@ -46,7 +46,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('CardSuccess.txt');
 
-        $response = $this->gateway->getCardToken($this->options)->send();
+        $response = $this->gateway->createCard($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -54,11 +54,11 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->getMessage());
     }
 
-    public function testGetCardTokenError()
+    public function testCreateCardError()
     {
         $this->setMockHttpResponse('CardFailure.txt');
 
-        $response = $this->gateway->getCardToken($this->options)->send();
+        $response = $this->gateway->createCard($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

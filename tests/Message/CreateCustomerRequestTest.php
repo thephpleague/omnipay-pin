@@ -4,16 +4,25 @@ namespace Omnipay\Pin\Message;
 
 use Omnipay\Tests\TestCase;
 
-class CardRequestTest extends TestCase
+class CreateCustomerRequestTest extends TestCase
 {
     public function setUp()
     {
-        $this->request = new CardRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new CreateCustomerRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
+                'email' => 'roland@pin.net.au',
                 'card' => $this->getValidCard(),
             )
         );
+    }
+
+    public function testDataWithCardToken()
+    {
+        $this->request->setToken('card_abc');
+        $data = $this->request->getData();
+
+        $this->assertSame('card_abc', $data['card_token']);
     }
 
     public function testDataWithCard()
@@ -22,29 +31,29 @@ class CardRequestTest extends TestCase
         $this->request->setCard($card);
         $data = $this->request->getData();
 
-        $this->assertSame($card['number'], $data['number']);
+        $this->assertSame($card['number'], $data['card']['number']);
     }
 
     public function testSendSuccess()
     {
-        $this->setMockHttpResponse('CardSuccess.txt');
+        $this->setMockHttpResponse('CustomerSuccess.txt');
 
         $response = $this->request->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('card_8LmnNMTYWG4zQZ4YnYQhBg', $response->getCardToken());
+        $this->assertEquals('cus_Mb-8S1ZgEbLUUUJ97dfhfQ', $response->getCustomerToken());
         $this->assertTrue($response->getMessage());
     }
 
     public function testSendError()
     {
-        $this->setMockHttpResponse('CardFailure.txt');
+        $this->setMockHttpResponse('CustomerFailure.txt');
         $response = $this->request->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getCardToken());
+        $this->assertNull($response->getCustomerToken());
         $this->assertSame('One or more parameters were missing or invalid', $response->getMessage());
     }
 }

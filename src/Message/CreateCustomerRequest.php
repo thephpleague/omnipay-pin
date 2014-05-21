@@ -2,12 +2,10 @@
 
 namespace Omnipay\Pin\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
-
 /**
  * Pin Purchase Request
  */
-class CustomerRequest extends AbstractRequest
+class CreateCustomerRequest extends AbstractRequest
 {
     protected $liveEndpoint = 'https://api.pin.net.au/1';
     protected $testEndpoint = 'https://test-api.pin.net.au/1';
@@ -50,25 +48,8 @@ class CustomerRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        // don't throw exceptions for 4xx errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->isClientError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
-        $httpResponse = $this->httpClient->post($this->getEndpoint() . '/customers', null, $data)
-            ->setHeader('Authorization', 'Basic ' . base64_encode($this->getSecretKey() . ':'))
-            ->send();
+        $httpResponse = $this->sendRequest('/customers', $data);
 
         return $this->response = new Response($this, $httpResponse->json());
-    }
-
-    public function getEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 }
