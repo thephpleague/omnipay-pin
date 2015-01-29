@@ -42,6 +42,30 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('The current resource was deemed invalid.', $response->getMessage());
     }
 
+    public function testRefundSuccess()
+    {
+        $this->setMockHttpResponse('RefundSuccess.txt');
+
+        $response = $this->gateway->refund(array('amount' => '400.00', 'transactionReference' => 'ch_bZ3RhJnIUZ8HhfvH8CCvfA'))->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('rf_ERCQy--Ay6o-NKGiUVcKKA', $response->getTransactionReference());
+        $this->assertSame('Pending', $response->getMessage());
+    }
+
+    public function testRefundError()
+    {
+        $this->setMockHttpResponse('RefundFailure.txt');
+
+        $response = $this->gateway->refund(array('amount' => '500.00', 'transactionReference' => 'ch_bZ3RhJnIUZ8HhfvH8CCvfA'))->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertSame('Refund amount is more than your available Pin Payments balance.', $response->getMessage());
+    }
+
     public function testGetCardTokenSuccess()
     {
         $this->setMockHttpResponse('CardSuccess.txt');
