@@ -1,4 +1,7 @@
 <?php
+/**
+ * Pin Response
+ */
 
 namespace Omnipay\Pin\Message;
 
@@ -6,6 +9,10 @@ use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * Pin Response
+ *
+ * This is the response class for all Pin REST requests.
+ *
+ * @see \Omnipay\Pin\Gateway
  */
 class Response extends AbstractResponse
 {
@@ -21,6 +28,14 @@ class Response extends AbstractResponse
         }
     }
 
+    /**
+     * Get Card Token
+     *
+     * This is used after createCard to get the credit card token to be
+     * used in future transactions.
+     *
+     * @return string
+     */
     public function getCardToken()
     {
         if (isset($this->data['response']['token'])) {
@@ -28,6 +43,14 @@ class Response extends AbstractResponse
         }
     }
 
+    /**
+     * Get Customer Token
+     *
+     * This is used after createCustomer to get the customer token to be
+     * used in future transactions.
+     *
+     * @return string
+     */
     public function getCustomerToken()
     {
         if (isset($this->data['response']['token'])) {
