@@ -29,14 +29,14 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Get Card Token
+     * Get Card Reference
      *
      * This is used after createCard to get the credit card token to be
      * used in future transactions.
      *
      * @return string
      */
-    public function getCardToken()
+    public function getCardReference()
     {
         if (isset($this->data['response']['token'])) {
             return $this->data['response']['token'];
@@ -44,18 +44,34 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Get Customer Token
+     * @deprecated
+     */
+    public function getCardToken()
+    {
+        return $this->getCardReference();
+    }
+
+    /**
+     * Get Customer Reference
      *
      * This is used after createCustomer to get the customer token to be
      * used in future transactions.
      *
      * @return string
      */
-    public function getCustomerToken()
+    public function getCustomerReference()
     {
         if (isset($this->data['response']['token'])) {
             return $this->data['response']['token'];
         }
+    }
+
+    /**
+     * @deprecated
+     */
+    public function getCustomerToken()
+    {
+        return $this->getCustomerReference();
     }
 
     public function getMessage()
