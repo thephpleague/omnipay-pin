@@ -17,7 +17,7 @@ class CreateCustomerRequestTest extends TestCase
         );
     }
 
-    public function testDataWithCardToken()
+    public function testDataWithCardReference()
     {
         $this->request->setToken('card_abc');
         $data = $this->request->getData();
@@ -42,7 +42,7 @@ class CreateCustomerRequestTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('cus_Mb-8S1ZgEbLUUUJ97dfhfQ', $response->getCustomerToken());
+        $this->assertEquals('cus_Mb-8S1ZgEbLUUUJ97dfhfQ', $response->getCustomerReference());
         $this->assertTrue($response->getMessage());
     }
 
@@ -53,7 +53,7 @@ class CreateCustomerRequestTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getCustomerToken());
+        $this->assertNull($response->getCustomerReference());
         $this->assertSame('One or more parameters were missing or invalid', $response->getMessage());
     }
 }

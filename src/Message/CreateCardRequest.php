@@ -60,7 +60,7 @@ namespace Omnipay\Pin\Message;
  *   ))->send();
  *   if ($response->isSuccessful()) {
  *       // Find the card ID
- *       $card_id = $response->getCardToken();
+ *       $card_id = $response->getCardReference();
  *   } else {
  *       echo "Gateway createCard failed.\n";
  *       echo "Error message == " . $response->getMessage() . "\n";
