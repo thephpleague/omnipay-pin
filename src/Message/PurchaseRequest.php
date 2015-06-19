@@ -141,6 +141,6 @@ class PurchaseRequest extends AbstractRequest
         $capture = $this->getParameter('capture');
 
         // By default with Pin a transaction is captured.
-        return $capture === null ? true : $capture;
+        return $capture === false ? 'false' : 'true';
     }
 }

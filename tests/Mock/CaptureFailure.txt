@@ -1,4 +1,4 @@
-HTTP/1.1 200 OK
+HTTP/1.1 400 AUTHORISATION_EXPIRED
 Cache-Control: max-age=0, private, must-revalidate
 Content-Type: application/json; charset=utf-8
 Date: Fri, 15 Feb 2013 15:42:42 GMT
@@ -15,4 +15,4 @@ X-UA-Compatible: IE=Edge,chrome=1
 Content-Length: 584
 Connection: keep-alive
 
-{"error":"invalid_resource","error_description":"One or more parameters were missing or invalid","messages":[{"param":"expiry_month","code":"expiry_month_invalid","message":"Expiry month can't be blank"}]}
+{"error":"authorisation_expired","error_description":"The authorisation has expired and can not be captured.","charge_token":"ch_lfUYEBK14zotCTykezJkfg"}
