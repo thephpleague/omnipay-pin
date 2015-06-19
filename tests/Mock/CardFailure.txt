@@ -6,7 +6,7 @@ ETag: "e0b6339dc44a19a2901de1447ec94ebb"
 Server: Apache/2.2.20 (Ubuntu)
 Status: 200
 Strict-Transport-Security: max-age=31536000
-Vary: Use-Agent
+Vary: User-Agent
 X-Powered-By: Phusion Passenger (mod_rails/mod_rack) 3.0.11
 X-Rack-Cache: invalidate, pass
 X-Request-Id: 6444d2d9467ed2a7ace471522f2d439b
