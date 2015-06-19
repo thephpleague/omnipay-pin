@@ -102,6 +102,7 @@ class PurchaseRequest extends AbstractRequest
         $data['currency'] = strtolower($this->getCurrency());
         $data['description'] = $this->getDescription();
         $data['ip_address'] = $this->getClientIp();
+        $data['capture'] = $this->getCapture();
 
         if ($token = $this->getToken()) {
             if (strpos($token, 'card_') !== false) {
@@ -133,5 +134,13 @@ class PurchaseRequest extends AbstractRequest
         $httpResponse = $this->sendRequest('/charges', $data);
 
         return $this->response = new Response($this, $httpResponse->json());
+    }
+
+    public function getCapture()
+    {
+        $capture = $this->getParameter('capture');
+
+        // By default with Pin a transaction is captured.
+        return $capture === null ? true : $capture;
     }
 }
