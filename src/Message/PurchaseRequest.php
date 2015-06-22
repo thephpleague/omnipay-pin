@@ -99,7 +99,7 @@ class PurchaseRequest extends AbstractRequest
 
         // FIXME -- this won't work if there is no card.
         $data['email'] = $this->getCard()->getEmail();
-        
+
         $data['amount'] = $this->getAmountInteger();
         $data['currency'] = strtolower($this->getCurrency());
         $data['description'] = $this->getDescription();
@@ -138,11 +138,37 @@ class PurchaseRequest extends AbstractRequest
         return $this->response = new Response($this, $httpResponse->json());
     }
 
+    /**
+     * Get the Capture flag.
+     *
+     * Returns the capture parameter, which states whether the charge is
+     * just an authorisation or it is captured instantly. By default all
+     * charges are captured. Please note that the return has to be a string
+     * and not a boolean or Pin's API will disregard it and consider it set
+     * to 'true'
+     *
+     * @return string
+     */
     public function getCapture()
     {
         $capture = $this->getParameter('capture');
 
         // By default with Pin a transaction is captured.
         return $capture === false ? 'false' : 'true';
+    }
+
+    /**
+     * Set the capture flag.
+     *
+     * This flag states whether the charge is just an authorisation or it is
+     * captured instantly. By default all charges are captured.
+     *
+     * @param $value
+     *
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setCapture($value)
+    {
+        return $this->setParameter('capture', $value);
     }
 }
