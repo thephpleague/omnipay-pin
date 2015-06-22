@@ -1,6 +1,6 @@
 <?php
 /**
- * Pin Response
+ * Pin Capture Response
  */
 
 namespace Omnipay\Pin\Message;
@@ -28,5 +28,4 @@ class CaptureResponse extends Response
             return $this->data['response']['captured'];
         }
     }
-
 }
