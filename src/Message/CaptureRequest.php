@@ -2,6 +2,8 @@
 
 namespace Omnipay\Pin\Message;
 
+use Guzzle\Http\Message\RequestInterface;
+
 /**
  * Pin Capture Request
  */
@@ -9,18 +11,17 @@ class CaptureRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('transactionReference', 'amount');
+        $this->validate('transactionReference');
 
-        $data = array();
-        $data['amount'] = $this->getAmountInteger();
+        // Amount is the only possible optional parameter
+        $amount = $this->getAmountInteger();
 
-        return $data;
+        return $amount ? array('amount' => $amount) : array();
     }
 
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('/charges/' . $this->getTransactionReference() . '/capture', $data);
-
+        $httpResponse = $this->sendRequest('/charges/' . $this->getTransactionReference() . '/capture', $data, RequestInterface::PUT);
         return $this->response = new CaptureResponse($this, $httpResponse->json());
     }
 }

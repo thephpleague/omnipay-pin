@@ -69,9 +69,11 @@ class CreateCustomerRequest extends AbstractRequest
 {
     public function getData()
     {
+        $this->validate('email');
+
         $data = array();
-        // FIXME -- this won't work if there is no card.
-        $data['email'] = $this->getCard()->getEmail();
+
+        $data['email'] = $this->getEmail();
 
         if ($this->getToken()) {
             $data['card_token'] = $this->getToken();

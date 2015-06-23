@@ -15,6 +15,8 @@ class GatewayTest extends GatewayTestCase
         $this->options = array(
             'amount' => '10.00',
             'card'   => $this->getValidCard(),
+            'email'       => 'roland@pin.net.au',
+            'description' => 'test charge'
         );
     }
 
