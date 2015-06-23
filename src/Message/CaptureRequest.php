@@ -22,7 +22,8 @@ class CaptureRequest extends AbstractRequest
     public function sendData($data)
     {
         $httpResponse = $this->sendRequest(
-            '/charges/' . $this->getTransactionReference() . '/capture', $data,
+            '/charges/' . $this->getTransactionReference() . '/capture',
+            $data,
             RequestInterface::PUT
         );
         return $this->response = new CaptureResponse($this, $httpResponse->json());
