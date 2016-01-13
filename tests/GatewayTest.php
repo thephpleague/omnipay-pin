@@ -66,7 +66,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('Refund amount is more than your available Pin Payments balance.', $response->getMessage());
     }
 
-    public function testGetCardTokenSuccess()
+    public function testGetCardReferenceSuccess()
     {
         $this->setMockHttpResponse('CardSuccess.txt');
 
@@ -74,7 +74,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('card_8LmnNMTYWG4zQZ4YnYQhBg', $response->getCardToken());
+        $this->assertEquals('card_8LmnNMTYWG4zQZ4YnYQhBg', $response->getCardReference());
         $this->assertTrue($response->getMessage());
     }
 
@@ -86,7 +86,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getCardToken());
+        $this->assertNull($response->getCardReference());
         $this->assertSame('One or more parameters were missing or invalid', $response->getMessage());
     }
 
@@ -98,7 +98,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('cus_Mb-8S1ZgEbLUUUJ97dfhfQ', $response->getCustomerToken());
+        $this->assertEquals('cus_Mb-8S1ZgEbLUUUJ97dfhfQ', $response->getCustomerReference());
         $this->assertTrue($response->getMessage());
     }
 
@@ -110,7 +110,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getCustomerToken());
+        $this->assertNull($response->getCustomerReference());
         $this->assertSame('One or more parameters were missing or invalid', $response->getMessage());
     }
 }
