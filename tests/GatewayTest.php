@@ -15,6 +15,8 @@ class GatewayTest extends GatewayTestCase
         $this->options = array(
             'amount' => '10.00',
             'card'   => $this->getValidCard(),
+            'email'       => 'roland@pin.net.au',
+            'description' => 'test charge'
         );
     }
 
@@ -112,5 +114,29 @@ class GatewayTest extends GatewayTestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getCustomerReference());
         $this->assertSame('One or more parameters were missing or invalid', $response->getMessage());
+    }
+
+    public function testCaptureSuccess()
+    {
+        $this->setMockHttpResponse('CaptureSuccess.txt');
+
+        $response = $this->gateway->capture(array('amount' => '400.00', 'transactionReference' => 'ch_bZ3RhJnIUZ8HhfvH8CCvfA'))->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('ch_lfUYEBK14zotCTykezJkfg', $response->getTransactionReference());
+        $this->assertTrue($response->getCaptured());
+    }
+
+    public function testCaptureError()
+    {
+        $this->setMockHttpResponse('CaptureFailure.txt');
+
+        $response = $this->gateway->capture(array('amount' => '400.00', 'transactionReference' => 'ch_lfUYEBK14zotCTykezJkfg'))->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertSame('The authorisation has expired and can not be captured.', $response->getMessage());
     }
 }

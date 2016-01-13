@@ -11,9 +11,11 @@ class PurchaseRequestTest extends TestCase
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
-                'amount'   => '10.00',
-                'currency' => 'AUD',
-                'card'     => $this->getValidCard(),
+                'amount'      => '10.00',
+                'currency'    => 'AUD',
+                'card'        => $this->getValidCard(),
+                'email'       => 'roland@pin.net.au',
+                'description' => 'test charge'
             )
         );
     }
