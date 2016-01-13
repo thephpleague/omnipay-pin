@@ -5,6 +5,8 @@
 
 namespace Omnipay\Pin\Message;
 
+use Guzzle\Http\Message\RequestInterface;
+
 /**
  * Pin Abstract REST Request
  *
@@ -77,6 +79,27 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
+     * Get the request email.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->getParameter('email');
+    }
+
+    /**
+     * Sets the request email.
+     *
+     * @param string $value
+     * @return AbstractRequest Provides a fluent interface
+     */
+    public function setEmail($value)
+    {
+        return $this->setParameter('email', $value);
+    }
+
+    /**
      * Get API endpoint URL
      *
      * @return string
@@ -84,20 +107,19 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected function getEndpoint()
     {
         $base = $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
-        return $base . '/' . self::API_VERSION;
+        return $base . self::API_VERSION;
     }
 
     /**
      * Send a request to the gateway.
      *
-     * FIXME: This should be calling createRequest() instead of post()
-     * to allow other HTTP methods to be used.  See issue #4.
-     *
      * @param string $action
-     * @param array $data
+     * @param array  $data
+     * @param string $method
+     *
      * @return HttpResponse
      */
-    public function sendRequest($action, $data = null)
+    public function sendRequest($action, $data = null, $method = RequestInterface::POST)
     {
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
@@ -109,9 +131,12 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             }
         );
 
-        $httpResponse = $this->httpClient->post($this->getEndpoint() . $action, null, $data)
-            ->setHeader('Authorization', 'Basic ' . base64_encode($this->getSecretKey() . ':'));
-
-        return $httpResponse->send();
+        // Return the response we get back from Pin Payments
+        return $this->httpClient->createRequest(
+            $method,
+            $this->getEndpoint() . $action,
+            array('Authorization' => 'Basic ' . base64_encode($this->getSecretKey() . ':')),
+            $data
+        )->send();
     }
 }

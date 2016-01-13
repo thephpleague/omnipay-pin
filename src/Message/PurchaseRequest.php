@@ -93,24 +93,43 @@ class PurchaseRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('amount', 'card');
+        $data = array();
+        $this->validate('amount', 'description');
 
         $data = array();
-        // FIXME -- this won't work if there is no card.
-        $data['email'] = $this->getCard()->getEmail();
+
         $data['amount'] = $this->getAmountInteger();
         $data['currency'] = strtolower($this->getCurrency());
         $data['description'] = $this->getDescription();
         $data['ip_address'] = $this->getClientIp();
+        $data['capture'] = $this->getCapture();
 
+        // Token payments
         if ($token = $this->getToken()) {
             if (strpos($token, 'card_') !== false) {
                 $data['card_token'] = $token;
             } else {
                 $data['customer_token'] = $token;
             }
+
+            // Supply an email address if provided, but it is not required
+            if ($this->getEmail()) {
+                $data['email'] = $this->getEmail();
+            }
+
+        // Card payments
         } else {
+            $this->validate('card');
             $this->getCard()->validate();
+
+            // An email address is required
+            if ($this->getCard()->getEmail) {
+                $data['email'] = $this->getEmail();
+            } elseif ($this->getEmail()) {
+                $data['email'] = $this->getEmail();
+            } else {
+                $this->validate('email');
+            }
 
             $data['card']['number'] = $this->getCard()->getNumber();
             $data['card']['expiry_month'] = $this->getCard()->getExpiryMonth();
@@ -133,5 +152,39 @@ class PurchaseRequest extends AbstractRequest
         $httpResponse = $this->sendRequest('/charges', $data);
 
         return $this->response = new Response($this, $httpResponse->json());
+    }
+
+    /**
+     * Get the Capture flag.
+     *
+     * Returns the capture parameter, which states whether the charge is
+     * just an authorisation or it is captured instantly. By default all
+     * charges are captured. Please note that the return has to be a string
+     * and not a boolean or Pin's API will disregard it and consider it set
+     * to 'true'
+     *
+     * @return string
+     */
+    public function getCapture()
+    {
+        $capture = $this->getParameter('capture');
+
+        // By default with Pin a transaction is captured.
+        return $capture === false ? 'false' : 'true';
+    }
+
+    /**
+     * Set the capture flag.
+     *
+     * This flag states whether the charge is just an authorisation or it is
+     * captured instantly. By default all charges are captured.
+     *
+     * @param $value
+     *
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setCapture($value)
+    {
+        return $this->setParameter('capture', $value);
     }
 }
