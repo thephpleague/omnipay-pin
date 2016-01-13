@@ -87,7 +87,7 @@ namespace Omnipay\Pin\Message;
  * </code>
  *
  * @see \Omnipay\Pin\Gateway
- * @link https://pin.net.au/docs/api/charges 
+ * @link https://pin.net.au/docs/api/charges
  */
 class PurchaseRequest extends AbstractRequest
 {
