@@ -123,8 +123,8 @@ class PurchaseRequest extends AbstractRequest
             $this->getCard()->validate();
 
             // An email address is required
-            if ($this->getCard()->getEmail) {
-                $data['email'] = $this->getEmail();
+            if ($this->getCard()->getEmail()) {
+                $data['email'] = $this->getCard()->getEmail();
             } elseif ($this->getEmail()) {
                 $data['email'] = $this->getEmail();
             } else {
