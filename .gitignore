@@ -4,3 +4,7 @@ composer.phar
 phpunit.xml
 .directory
 /documents/
+.idea/
+dirlist.app
+dirlist.cache
+dirlist.vendor
