@@ -94,10 +94,10 @@ class PurchaseRequest extends AbstractRequest
     public function getData()
     {
         $this->validate('amount', 'card');
-        // FIXME -- this won't work if there is no card.
-        $data['email'] = $this->getCard()->getEmail();
 
         $data = array();
+        // FIXME -- this won't work if there is no card.
+        $data['email'] = $this->getCard()->getEmail();
         $data['amount'] = $this->getAmountInteger();
         $data['currency'] = strtolower($this->getCurrency());
         $data['description'] = $this->getDescription();
