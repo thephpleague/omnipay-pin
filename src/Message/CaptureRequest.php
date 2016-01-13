@@ -1,4 +1,7 @@
 <?php
+/**
+ * Pin Capture Request
+ */
 
 namespace Omnipay\Pin\Message;
 
