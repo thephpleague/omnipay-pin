@@ -40,14 +40,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      *
      * @var string URL
      */
-    protected $testEndpoint = 'https://test-api.pin.net.au/';
+    protected $testEndpoint = 'https://test-api.pinpayments.com/';
 
     /**
      * Live Endpoint URL
      *
      * @var string URL
      */
-    protected $liveEndpoint = 'https://api.pin.net.au/';
+    protected $liveEndpoint = 'https://api.pinpayments.com/';
 
     /**
      * Get secret key
