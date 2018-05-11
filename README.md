@@ -7,9 +7,9 @@
 [![Total Downloads](https://poser.pugx.org/omnipay/pin/d/total.png)](https://packagist.org/packages/omnipay/pin)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements [Pin](https://pin.net.au/) support for Omnipay.
+processing library for PHP 5.3+. This package implements [Pin](https://pinpayments.com/) support for Omnipay.
 
-[Pin Payments](https://pin.net.au/) is an Australian all-in-one payment system, allowing you
+[Pin Payments](https://pinpayments.com/) is an Australian all-in-one payment system, allowing you
 to accept multi-currency credit card payments without a security
 deposit or a merchant account.
  
