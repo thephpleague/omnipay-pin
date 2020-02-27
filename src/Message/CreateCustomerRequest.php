@@ -17,7 +17,7 @@ namespace Omnipay\Pin\Message;
  * The card object in returned customer information represents
  * this primary card. It contains a member called primary,
  * which says whether the card is a customer’s primary card;
- * its value will always be true. 
+ * its value will always be true.
  *
  * Example:
  *
