@@ -121,11 +121,12 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function sendRequest($action, $data = null, $method = 'POST')
     {
+		$body = $data ? http_build_query($data) : null;
         return $this->httpClient->request(
             $method,
             $this->getEndpoint() . $action,
             array('Authorization' => 'Basic ' . base64_encode($this->getSecretKey() . ':')),
-            $data
+            $body
         );
     }
 }
