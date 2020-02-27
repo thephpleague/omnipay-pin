@@ -26,9 +26,9 @@ class CaptureRequest extends AbstractRequest
     {
         $httpResponse = $this->sendRequest(
             '/charges/' . $this->getTransactionReference() . '/capture',
-            $data,
-            RequestInterface::PUT
+            http_build_query($data),
+            'PUT'
         );
-        return $this->response = new CaptureResponse($this, $httpResponse->json());
+        return $this->response = new CaptureResponse($this, $httpResponse->getBody()->getContents());
     }
 }

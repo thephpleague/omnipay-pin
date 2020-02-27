@@ -93,8 +93,8 @@ class CreateCardRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('/cards', $data);
+        $httpResponse = $this->sendRequest('/cards', http_build_query($data));
 
-        return $this->response = new Response($this, $httpResponse->json());
+        return $this->response = new Response($this, $httpResponse->getBody()->getContents());
     }
 }

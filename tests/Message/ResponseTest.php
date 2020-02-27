@@ -9,7 +9,7 @@ class ResponseTest extends TestCase
     public function testPurchaseSuccess()
     {
         $httpResponse = $this->getMockHttpResponse('PurchaseSuccess.txt');
-        $response = new Response($this->getMockRequest(), $httpResponse->json());
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody()->getContents());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -20,7 +20,7 @@ class ResponseTest extends TestCase
     public function testPurchaseFailure()
     {
         $httpResponse = $this->getMockHttpResponse('PurchaseFailure.txt');
-        $response = new Response($this->getMockRequest(), $httpResponse->json());
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody()->getContents());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -31,7 +31,7 @@ class ResponseTest extends TestCase
     public function testCardSuccess()
     {
         $httpResponse = $this->getMockHttpResponse('CardSuccess.txt');
-        $response = new Response($this->getMockRequest(), $httpResponse->json());
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody()->getContents());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -42,7 +42,7 @@ class ResponseTest extends TestCase
     public function testCardFailure()
     {
         $httpResponse = $this->getMockHttpResponse('CardFailure.txt');
-        $response = new Response($this->getMockRequest(), $httpResponse->json());
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody()->getContents());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -53,7 +53,7 @@ class ResponseTest extends TestCase
     public function testCustomerSuccess()
     {
         $httpResponse = $this->getMockHttpResponse('CustomerSuccess.txt');
-        $response = new Response($this->getMockRequest(), $httpResponse->json());
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody()->getContents());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -64,7 +64,7 @@ class ResponseTest extends TestCase
     public function testCustomerFailure()
     {
         $httpResponse = $this->getMockHttpResponse('CustomerFailure.txt');
-        $response = new Response($this->getMockRequest(), $httpResponse->json());
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody()->getContents());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
