@@ -16,26 +16,26 @@ namespace Omnipay\Pin\Message;
  *
  * Gateway Parameters
  *
- * * email 	Email address of the customer.  Obtained from the card data.
- * * description 	Description of the item purchased (e.g. "500g of single origin beans").
- * * amount 	Amount to charge in the currency’s base unit (e.g. cents
+ * * email  Email address of the customer.  Obtained from the card data.
+ * * description    Description of the item purchased (e.g. "500g of single origin beans").
+ * * amount     Amount to charge in the currency’s base unit (e.g. cents
  *   for AUD, yen for JPY). There is a minimum charge amount for each
  *   currency; refer to the documentation on supported currencies.
- * * ip_address 	IP address of the person submitting the payment.
+ * * ip_address     IP address of the person submitting the payment.
  *   Obtained from getClientIp.
- * * Optional currency 	The three-character ISO 4217 currency code of one
+ * * Optional currency  The three-character ISO 4217 currency code of one
  *   of our supported currencies, e.g. AUD or USD. Default value is "AUD".
- * * Optional capture 	Whether or not to immediately capture the charge
+ * * Optional capture   Whether or not to immediately capture the charge
  *   ("true" or "false"). If capture is false an authorisation is created.
  *   Later you can capture. Authorised charges automatically expire after
  *   5 days. Default value is "true".
  *
  * and one of the following:
  *
- * * card 	The full details of the credit card to be charged (CreditCard object)
- * * card_token 	Token of the card to be charged, as returned from the card
+ * * card   The full details of the credit card to be charged (CreditCard object)
+ * * card_token     Token of the card to be charged, as returned from the card
  *   tokens API or customer API.
- * * customer_token 	Token of the customer to be charged, as returned
+ * * customer_token Token of the customer to be charged, as returned
  *   from the customers API.
  *
  * ### Example

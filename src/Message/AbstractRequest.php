@@ -119,24 +119,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      *
      * @return HttpResponse
      */
-    public function sendRequest($action, $data = null, $method = RequestInterface::POST)
+    public function sendRequest($action, $data = null, $method = 'POST')
     {
-        // don't throw exceptions for 4xx errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->isClientError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
-        // Return the response we get back from Pin Payments
-        return $this->httpClient->createRequest(
+        $body = $data ? http_build_query($data) : null;
+        return $this->httpClient->request(
             $method,
             $this->getEndpoint() . $action,
             array('Authorization' => 'Basic ' . base64_encode($this->getSecretKey() . ':')),
-            $data
-        )->send();
+            $body
+        );
     }
 }
