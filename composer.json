@@ -1,5 +1,5 @@
 {
-    "name": "ttruong15/omnipay-pin",
+    "name": "omnipay/pin",
     "type": "library",
     "description": "Pin Payments driver for the Omnipay payment processing library",
     "keywords": [
@@ -10,7 +10,7 @@
         "payment",
         "pin"
     ],
-    "homepage": "https://github.com/ttruong15/omnipay-pin",
+    "homepage": "https://github.com/thephpleague/omnipay-pin",
     "license": "MIT",
     "authors": [
         {
